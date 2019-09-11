@@ -122,11 +122,9 @@
     
     Sections* section = [self.sectionsArray objectAtIndex:indexPath.section];
     Films* film = [section.films objectAtIndex:indexPath.row];
-    FilmsCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     FilmViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FilmViewController"];
     vc.film = film;
-    vc.ratingColor = cell.ratingLabel.textColor;
     
     [self.navigationController pushViewController:vc animated:YES];
 }

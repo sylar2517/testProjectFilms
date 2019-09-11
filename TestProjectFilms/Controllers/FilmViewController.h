@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property(strong, nonatomic)Films* film;
-@property(strong, nonatomic)UIColor* ratingColor;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *filmNameConstraintHeight;
 
 @property (weak, nonatomic) IBOutlet UIImageView *posterImageView;
 @property (weak, nonatomic) IBOutlet UILabel *filmNameLabel;

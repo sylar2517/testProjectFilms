@@ -18,9 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     if (self.film) {
         [self.navigationItem setTitle:self.film.filmLocalizedName];
+        
         self.filmNameLabel.text = self.film.filmName;
         
         self.filmYearLabel.text = [NSString stringWithFormat:@"Год: %@",self.film.filmYear];
@@ -35,14 +36,21 @@
             self.ratingLabel.text = @"-";
         } else {
             self.ratingLabel.text = self.film.filmRating;
-            self.ratingLabel.textColor = self.ratingColor;
+            CGFloat rating = [self.film.filmRating doubleValue];
+            if (rating >= 7) {
+                self.ratingLabel.textColor = [UIColor colorWithRed:0 green:123.0/255.0 blue:0 alpha:1];
+            } else if (rating < 5){
+                self.ratingLabel.textColor = [UIColor colorWithRed:1 green:11.0/255.0 blue:11.0/255.0 alpha:1];
+            } else {
+                self.ratingLabel.textColor = [UIColor colorWithRed:95.0/255.0 green:95.0/255.0  blue:95.0/255.0  alpha:1];
+            }
         }
         
         __weak FilmViewController* weakSelf = self;
         if (self.film.filmImageURL) {
             NSURLRequest* request = [NSURLRequest requestWithURL:self.film.filmImageURL];
             [self.posterImageView setImageWithURLRequest:request
-                                        placeholderImage:[UIImage imageNamed:@"notFoundIcon"]
+                                        placeholderImage:nil
                                                  success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
                 weakSelf.posterImageView.image = image;
                 weakSelf.posterImageView.contentMode = UIViewContentModeScaleToFill;
