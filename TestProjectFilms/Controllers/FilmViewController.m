@@ -23,7 +23,6 @@
         [self.navigationItem setTitle:self.film.filmLocalizedName];
         self.filmNameLabel.text = self.film.filmName;
         
-        
         self.filmYearLabel.text = [NSString stringWithFormat:@"Год: %@",self.film.filmYear];
         
         if (!self.film.filmDescription) {
@@ -46,6 +45,7 @@
                                         placeholderImage:[UIImage imageNamed:@"notFoundIcon"]
                                                  success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
                 weakSelf.posterImageView.image = image;
+                weakSelf.posterImageView.contentMode = UIViewContentModeScaleToFill;
             } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
                 if (error) {
                     [self showAllertWithMessege:@"Часть информации не доступна, попробуйте позже или проверьте соединение"];
@@ -59,7 +59,11 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+- (void)viewDidLayoutSubviews {
+    [self.descriptionTextView setContentOffset:CGPointZero animated:NO];
+}
 
+#pragma makr - Methods
 -(void)showAllertWithMessege:(NSString*)messege{
     UIAlertController* ac = [UIAlertController alertControllerWithTitle:@"Ошибка" message:messege preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction* aa = [UIAlertAction actionWithTitle:@"Ок" style:(UIAlertActionStyleCancel) handler:nil];
